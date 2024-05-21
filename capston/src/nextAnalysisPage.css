@@ -1,0 +1,111 @@
+/* General styling for the header */
+header {
+  text-align: center;
+  margin: 40px 0;
+  color: #333; /* Change the font color as needed */
+}
+
+/* Styling for the page title */
+h1 {
+  font-size: 2rem; /* Larger font size for the header */
+  line-height: 1.5;
+}
+
+
+/* Container for each graph and its controls */
+.analysis-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+
+.vs-text {
+  font-size: 33px;
+  font-weight: bold;
+  color: #FF4F4F; /* 빨간색 */
+  margin: 0 20px;
+}
+
+/* Styling for audio buttons */
+.audio-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.audio-button-f {
+  background-color: rgb(255, 99, 132);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 50%; /* 원형 버튼으로 만들기 */
+  padding: 13px; /* 버튼 내부 여백 조정 */
+  margin: 0 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.audio-button-l {
+  background-color: rgb(75, 192, 192); /* 버튼 배경색 */
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 50%; /* 원형 버튼으로 만들기 */
+  padding: 13px; /* 버튼 내부 여백 조정 */
+  margin: 0 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.audio-button span {
+  margin-left: 10px; /* 아이콘과 텍스트 사이 간격 조정 */
+  font-size: 13px;
+}
+
+.audio-button:hover {
+  background-color: #FF4F4F; /* 마우스 호버 시 배경색 변경 */
+}
+
+/* Center alignment for graph sections */
+.graph-section {
+  font-family: "Poor Story", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+}
+
+/* Additional styling for graph section */
+.graph-section {
+  width: 90%;
+  max-width: 600px;
+  margin-bottom: 40px;
+  box-shadow: 1px 2px 4px 3px rgba(0,0,0,0.1);
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  position: relative;
+}
+
+.next-btn {
+  width: 70%;
+  padding: 10px 20px;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  box-sizing: border-box;
+  margin: 0 10px;
+  background: #cd5c5c;
+  display: block;
+  margin: 20px auto;
+  margin-bottom: 60px;
+}
