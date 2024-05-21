@@ -39,7 +39,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # 1. model choose
 checkpoint = 105
-checkpoint_dir = f"C:/cola/backend/inference/checkpoint-{checkpoint}"
+checkpoint_dir = f"./inference/checkpoint-{checkpoint}"
 ## 경로도 바꾸시오!!!
 
 # 2. model on
@@ -53,6 +53,6 @@ label2id = model.config.label2id
 model.to(device)
 
 # 4. predict
-audio_file = "C:/cola/backend/inference/부산대구사투리2s.wav"   # 여기 파일 넣기!!!!!
+audio_file = "./inference/부산대구사투리2s.wav"   # 여기 파일 넣기!!!!!
 probs, idxs = predict_top3(audio_file)
 print_result(probs, idxs)

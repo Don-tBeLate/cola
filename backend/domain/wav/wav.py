@@ -77,12 +77,12 @@ async def wav_result_complicated():
         name = f"{f[:-5]}.wav"
         path = os.path.join(UPLOAD_WAV_DIR, name)
 
-        sound = AudioSegment.from_file(f"C:/cola/backend/uploaded_mp3_files/{f}", 'webm')
-        sound.export(f"C:/cola/backend/uploaded_wav_files/{name}", format="wav")
+        sound = AudioSegment.from_file(f"./uploaded_mp3_files/{f}", 'webm')
+        sound.export(f"./uploaded_wav_files/{name}", format="wav")
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         checkpoint = 105
-        checkpoint_dir = f"C:/cola/backend/inference/checkpoint-{checkpoint}"
+        checkpoint_dir = f"./inference/checkpoint-{checkpoint}"
         d = checkpoint_dir
 
         model = Wav2Vec2ForSequenceClassification.from_pretrained(d)
@@ -92,7 +92,7 @@ async def wav_result_complicated():
 
         model.to(device)
 
-        probs, idxs = inference.predict_top3(f"C:/cola/backend/uploaded_wav_files/{f[:-5]}.wav")
+        probs, idxs = inference.predict_top3(f"./uploaded_wav_files/{f[:-5]}.wav")
         for i in range(3):
             index = idxs[i].item()
             prob = probs[i].item() * 100
@@ -107,7 +107,7 @@ async def wav_result_complicated():
 
 @router.get("/result/graph")
 async def wav_result_complicated():
-    path = "C:/cola/backend/uploaded_wav_files/"
+    path = "./uploaded_wav_files/"
     audio_path1 = path + '4f34be34-313c-4100-9890-b35a69e8d275.wav'
     audio_path2 = path + '7cc4f12f-1906-40d1-8b87-23941e254828.wav'
 
