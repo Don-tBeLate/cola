@@ -1,18 +1,20 @@
 /* General styling for the header */
 header {
   text-align: center;
-  margin: 40px 0;
+  margin: 20px 0;
   color: #333; /* Change the font color as needed */
 }
 
-/* Styling for the page title */
+.nextAnalysisPage{
+  padding:20px;
+  background-color: #fff8f8;
+}
+
 h1 {
   font-size: 2rem; /* Larger font size for the header */
   line-height: 1.5;
 }
 
-
-/* Container for each graph and its controls */
 .analysis-container {
   display: flex;
   flex-direction: column;
@@ -21,9 +23,9 @@ h1 {
 }
 
 .vs-text {
-  font-size: 33px;
+  font-size: 25px;
   font-weight: bold;
-  color: #FF4F4F; /* 빨간색 */
+  color: #a0a0a0;
   margin: 0 20px;
 }
 
@@ -33,10 +35,11 @@ h1 {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  margin-bottom: 15px;
 }
 
 .audio-button-f {
-  background-color: rgb(255, 99, 132);
+  background-color: #99b5db;
   color: #fff;
   font-weight: bold;
   border: none;
@@ -50,7 +53,7 @@ h1 {
 }
 
 .audio-button-l {
-  background-color: rgb(75, 192, 192); /* 버튼 배경색 */
+  background-color:  #f08080; /* 버튼 배경색 */
   color: #fff;
   font-weight: bold;
   border: none;
@@ -64,12 +67,8 @@ h1 {
 }
 
 .audio-button span {
-  margin-left: 10px; /* 아이콘과 텍스트 사이 간격 조정 */
-  font-size: 13px;
-}
-
-.audio-button:hover {
-  background-color: #FF4F4F; /* 마우스 호버 시 배경색 변경 */
+  margin-left: 15px; /* 아이콘과 텍스트 사이 간격 조정 */
+  font-size: 17px;
 }
 
 /* Center alignment for graph sections */
@@ -82,11 +81,11 @@ h1 {
 
 /* Additional styling for graph section */
 .graph-section {
-  width: 90%;
+  width: 120%;
   max-width: 600px;
   margin-bottom: 40px;
   box-shadow: 1px 2px 4px 3px rgba(0,0,0,0.1);
-  padding: 20px;
+  padding: 10px;
   background-color: #fff;
   border-radius: 10px;
   position: relative;

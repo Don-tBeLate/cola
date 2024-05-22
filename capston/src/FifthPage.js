@@ -7,57 +7,65 @@ function FifthPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const nickname = location.state?.nickname;
+  const audioUrls = location.state?.audioUrls || [];
   const [allResults, setAllResults] = useState([]);
   let myData = null;
   let tmp = null;
 
   const goToNextAnalysis = () => {
-    navigate("/nextAnalysisPage", { state: { nickname } });
+    navigate("/nextAnalysisPage", { state: { nickname, allResults, audioUrls } });
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href =
       "https://fonts.googleapis.com/css2?family=Poor+Story&display=swap";
     document.head.appendChild(link);
 
-    try {
-      const data = await fetch("http://127.0.0.1:8000/api/wav/result/complicated").then((res) => res.json());
-      setAllResults(data.result)
-    }
-    catch(e){
-      console.log("API 호출 에러", e)
-    }
-    
+    const fetchData = async () => {
+      try {
+        const data = await fetch("http://3.34.59.190/api/wav/result/complicated").then((res) => res.json());
+        setAllResults(data.result);
+      } catch (e) {
+        console.log("API 호출 에러", e);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      document.head.removeChild(link);
+    };
   }, []);
 
-  const results = allResults
-    .sort((a, b) => b.percentage - a.percentage)
-    .slice(0, 3)
-
-
-    console.log("###",allResults,results)
-  //useEffect(() => {
+  useEffect(() => {
     const colorizeMap = () => {
-      // console.log("Colorizing map...");
       const svgPaths = document.querySelectorAll("svg path");
       svgPaths.forEach((path) => {
         const regionName = path.id;
         const result = results.find((result) => result.region === regionName);
         if (result) {
-          // console.log(`Colorizing region: ${regionName}`);
           path.style.fill = result.color;
-        } else {
-          // console.log(`Region not found: ${regionName}`);
         }
       });
     };
+
     colorizeMap();
- // }, []);
+
+    return () => {
+      const svgPaths = document.querySelectorAll("svg path");
+      svgPaths.forEach((path) => {
+        path.style.fill = ""; // Reset to default or initial color
+      });
+    };
+  }, [allResults]);
+
+  const results = allResults
+    .sort((a, b) => b.percentage - a.percentage)
+    .slice(0, 3);
 
   const colorizeGraph = () => {
-    //console.log("Colorizing graph...");
     return results.map((result, index) => (
       <div key={index} className="result">
         <div className="region">{result.region}</div>

@@ -27,11 +27,10 @@ const sentenceTitles = [
 
 function NextAnalysisPage() {
     const [audioPlaying, setAudioPlaying] = useState(null);
-    const [standardSentences, setStandardSentences] = useState([]);
-    const [userSentences, setUserSentences] = useState([]);
+    const [allSentences, setAllSentences] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
-    const { nickname, audioUrls } = location.state;
+    const { nickname, allResults, audioUrls } = location.state;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -40,11 +39,13 @@ function NextAnalysisPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/wav/result/graph'); // 여기
+                const response = await fetch('http://3.34.59.190/api/wav/result/graph');
                 const data = await response.json();
-                // 여기
-                setStandardSentences(data.standardSentences);
-                setUserSentences(data.userSentences);
+                if (data.list1 && data.list2 && data.list3 && data.list4 && data.list5 && data.list6) {
+                    setAllSentences([data.list1, data.list2, data.list3, data.list4, data.list5, data.list6]);
+                } else {
+                    console.error('Unexpected data format:', data);
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -54,7 +55,7 @@ function NextAnalysisPage() {
     }, []);
 
     const goToFinalPage = () => {
-        navigate('/final', { state: { nickname } });
+        navigate('/final', { state: { nickname, allResults, audioUrls } });
     };
 
     const playAudio = (src) => {
@@ -74,20 +75,20 @@ function NextAnalysisPage() {
         document.head.appendChild(link);
     }, []);
 
-    const createChartData = (standardData, userData, title) => ({
+    const createChartData = (data1, data2, title) => ({
         title: title,
-        labels: Array.from({ length: standardData.length }, (_, i) => `Point ${i + 1}`),
+        labels: Array.from({ length: data1.length }, (_, i) => `Point ${i + 1}`),
         datasets: [
             {
-                label: '표준어 수치',
-                data: standardData,
+                label: 'Data 1',
+                data: data1,
                 borderColor: '#f08080',
                 tension: 0.1,
                 pointRadius: 0
             },
             {
-                label: '나의 문장 수치',
-                data: userData,
+                label: 'Data 2',
+                data: data2,
                 borderColor: '#99b5db',
                 tension: 0.1,
                 pointRadius: 0
@@ -102,25 +103,24 @@ function NextAnalysisPage() {
                 <img src={process.env.PUBLIC_URL + '/profile.jpg'} alt="profile" className="profile-image" />
             </header>
             <div className="analysis-container">
-                {standardSentences.length > 0 && userSentences.length > 0 && standardSentences.map((standardData, index) => (
-                    <div key={`section-${index}`} className="graph-section">
-                        <h3>{sentenceTitles[index]}</h3>
-                        <div style={{ height: '200px', width: '100%' }}>
-                            <Line data={createChartData(standardData, userSentences[index], sentenceTitles[index])} options={chartOptions} />
-                        </div>
-                        <div className="audio-buttons">
-                            <button onClick={() => playAudio(`audio${index + 1}standard.mp3`)} className="audio-button-l">
-                                <FontAwesomeIcon icon={faPlay} />
-                            </button>
-                            <span>표준음</span>
-                            <span className="vs-text">vs</span>
-                            <button onClick={() => playAudio(`audio${index + 1}mine.mp3`)} className="audio-button-f">
-                                <FontAwesomeIcon icon={faPlay} />
-                            </button>
-                            <span>내 음성</span>
-                        </div>
-                    </div>
-                ))}
+                {allSentences.length === 6 && (
+                    <>
+                        {Array.from({ length: 3 }).map((_, index) => (
+                            <div key={`section-${index}`} className="graph-section">
+                                <h3>{sentenceTitles[index]}</h3>
+                                <div style={{ height: '200px', width: '100%' }}>
+                                    <Line data={createChartData(allSentences[index * 2], allSentences[index * 2 + 1], sentenceTitles[index])} options={chartOptions} />
+                                </div>
+                                <div className="audio-buttons">
+                                    <button onClick={() => playAudio(audioUrls[index])} className="audio-button-l">
+                                        <FontAwesomeIcon icon={faPlay} />
+                                    </button>
+                                    <span>음성 {index + 1}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </>
+                )}
             </div>
             <button className="next-btn" onClick={goToFinalPage}>다음 페이지로</button>
         </div>

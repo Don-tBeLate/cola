@@ -16,6 +16,7 @@ function FourthPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const nickname = location.state?.nickname;
+  const previousAudioUrls = location.state?.audioUrls || [];
   const [isLoading, setLoading] = useState(false);
   const [recording, setRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState('');
@@ -29,13 +30,18 @@ function FourthPage() {
   const [token, setToken] = useState(null);
   const [fileContentType, setFileContentType] = useState(null);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
+
+
   const goToFifthPage = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      navigate('/fifthPage', { state: { nickname } });
-    }, 5000);
-  };
+  setLoading(true);
+  setTimeout(() => {
+    setLoading(false);
+    navigate('/fifthPage', { state: { nickname, audioUrls: [...previousAudioUrls, audioUrl] } });
+  }, 5000);
+};
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -69,7 +75,7 @@ function FourthPage() {
           formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
       
           try {
-              const response = await fetch("http://127.0.0.1:8000/api/wav/getwav", {
+              const response = await fetch("http://3.34.59.190/api/wav/getwav", {
                   method: 'POST',
                   body: formData
               });

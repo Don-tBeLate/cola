@@ -1,8 +1,7 @@
 /* App.css */
 
-/* 전체 페이지 스타일 */
 body {
-  padding:20px;
+  margin: 0;
   overflow-y: auto;
   font-family: "Poor Story", system-ui;
   font-weight: 400;
@@ -11,6 +10,7 @@ body {
 
 /* 전체 컨테이너 */
 .App {
+  padding:20px;
   display: flex;
   flex-direction: column;
   align-items: center; /* 수직 중앙 정렬 */

@@ -8,6 +8,7 @@ function ThirdPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const nickname = location.state?.nickname;
+  const previousAudioUrls = location.state?.audioUrls || [];
   const [recording, setRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -20,9 +21,13 @@ function ThirdPage() {
   const [token, setToken] = useState(null);
   const [fileContentType, setFileContentType] = useState(null);
 
+ useEffect(() => {
+    window.scrollTo(0, 0);
+}, []); 
+
   const goToFourthPage = () => {
-    navigate('/fourthPage', { state: { nickname } });
-  };
+  navigate('/FourthPage', { state: { nickname, audioUrls: [...previousAudioUrls, audioUrl] } });
+};
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -56,7 +61,7 @@ function ThirdPage() {
           formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
       
           try {
-              const response = await fetch("http://127.0.0.1:8000/api/wav/getwav", {
+              const response = await fetch("http://3.34.59.190/api/wav/getwav", {
                   method: 'POST',
                   body: formData
               });

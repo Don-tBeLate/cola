@@ -24,6 +24,11 @@ function App() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
+
+
+  useEffect(() => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://fonts.googleapis.com/css2?family=Poor+Story&display=swap';

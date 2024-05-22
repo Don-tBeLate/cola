@@ -1,4 +1,5 @@
 .SecondPage {
+  padding:20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,7 +60,7 @@
 .listen-btn {
   padding: 10px;
   font-size: 0;
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -71,7 +72,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:  #f08080;; /* 녹음 버튼 빨간색 */
+  background-color:  #f08080; /* 녹음 버튼 빨간색 */
 }
 
 .listen-btn {

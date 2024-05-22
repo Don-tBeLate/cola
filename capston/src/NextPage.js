@@ -21,6 +21,10 @@ function NextPage() {
     const [fileContentType, setFileContentType] = useState(null);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = 'https://fonts.googleapis.com/css2?family=Poor+Story&display=swap';
@@ -48,7 +52,7 @@ function NextPage() {
                     formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
                 
                     try {
-                        const response = await fetch("http://127.0.0.1:8000/api/wav/getwav", {
+                        const response = await fetch("http://3.34.59.190/api/wav/getwav", {
                             method: 'POST',
                             body: formData
                         });
@@ -104,6 +108,10 @@ function NextPage() {
         }
     };
 
+    const goToThirdPage = () => {
+        navigate('/ThirdPage', { state: { nickname, audioUrls: [audioUrl] } });
+    };
+
     return (
         <div className="SecondPage">
             <div className="header">
@@ -127,7 +135,7 @@ function NextPage() {
                     <p className="sentence-title">SENTENCE 1.</p>
                     <p className="sentence-content">첫번째 문장입니다.</p>
                 </div>
-                <button className="next-btn" onClick={() => navigate('/ThirdPage', { state: { nickname, audioUrl } })}>
+                <button className="next-btn" onClick={goToThirdPage}>
                     다음 페이지로
                 </button>
             </div>
