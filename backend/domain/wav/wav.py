@@ -3,10 +3,8 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from starlette import status
 from pydub import AudioSegment
-from pydub.utils import make_chunks
 import uuid
 import os
-import wave
 
 from matplotlib import pyplot as plt
 import numpy as np
