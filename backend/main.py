@@ -21,7 +21,6 @@ async def read_index():
 # CORS 이슈 해결 -> 접근 허용할 origin 추가
 origins = [
     "http://localhost:3000"
-    "http://3.34.59.190"
 ]
 
 app.add_middleware(
