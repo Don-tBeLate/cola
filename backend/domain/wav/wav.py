@@ -104,7 +104,7 @@ async def wav_result_complicated():
 
 
 @router.get("/result/graph")
-async def wav_result_complicated():
+async def wav_result_graph():
     path = "./uploaded_wav_files/"
     audio_path1 = path + '4f34be34-313c-4100-9890-b35a69e8d275.wav'
     audio_path2 = path + '7cc4f12f-1906-40d1-8b87-23941e254828.wav'
