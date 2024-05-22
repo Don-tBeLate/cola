@@ -92,7 +92,7 @@ async def wav_result_complicated():
 
         model.to(device)
 
-        probs, idxs = inference.predict_top3(f"./uploaded_wav_files/{f[:-5]}.wav")
+        probs, idxs = inference.predict_top3(f"./uploaded_wav_files/{name}")
         for i in range(3):
             index = idxs[i].item()
             prob = probs[i].item() * 100
