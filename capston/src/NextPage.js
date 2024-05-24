@@ -52,7 +52,7 @@ function NextPage() {
                     formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
                 
                     try {
-                        const response = await fetch("http://127.0.0.1:8000/api/wav/getwav", {
+                        const response = await fetch("http://3.34.59.190/api/wav/getwav", {
                             method: 'POST',
                             body: formData
                         });
