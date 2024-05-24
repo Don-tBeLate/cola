@@ -39,7 +39,7 @@ function NextAnalysisPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('//3.34.59.190/api/wav/result/graph');
+                const response = await fetch('http://3.34.59.190/api/wav/result/graph');
                 const data = await response.json();
                 if (data.list1 && data.list2 && data.list3 && data.list4 && data.list5 && data.list6) {
                     setAllSentences([data.list1, data.list2, data.list3, data.list4, data.list5, data.list6]);
