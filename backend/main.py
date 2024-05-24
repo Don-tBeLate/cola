@@ -13,7 +13,6 @@ app.include_router(wav.router)
 
 # CORS 이슈 해결 -> 접근 허용할 origin 추가
 origins = [
-    #"http://localhost:3000"
     "https://cola-mu.vercel.app"
 ]
 
