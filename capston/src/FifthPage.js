@@ -25,7 +25,7 @@ function FifthPage() {
 
     const fetchData = async () => {
       try {
-        const data = await fetch("http://3.34.59.190/api/wav/result/complicated").then((res) => res.json());
+        const data = await fetch("//3.34.59.190/api/wav/result/complicated").then((res) => res.json());
         setAllResults(data.result);
       } catch (e) {
         console.log("API 호출 에러", e);
