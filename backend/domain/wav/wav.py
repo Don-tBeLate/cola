@@ -1,22 +1,14 @@
 from fastapi import APIRouter, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from starlette import status
 from pydub import AudioSegment
 import uuid
 import os
 
-from matplotlib import pyplot as plt
-import numpy as np
-
 import parselmouth
-import numpy as np
-import matplotlib.pyplot as plt
 
 from transformers import Wav2Vec2ForSequenceClassification, Wav2Vec2FeatureExtractor
 import torch
-import torch.nn.functional as F
-import torchaudio
 
 from inference import inference
 
@@ -37,8 +29,8 @@ prob_list = [
     {'region': '제주', 'percentage': 0, 'color': '#ffa500'}
 ]
 
-UPLOAD_MP3_DIR = "uploaded_mp3_files"
-os.makedirs(UPLOAD_MP3_DIR, exist_ok=True)
+UPLOAD_WEBM_DIR = "uploaded_webm_files"
+os.makedirs(UPLOAD_WEBM_DIR, exist_ok=True)
 UPLOAD_WAV_DIR = "uploaded_wav_files"
 os.makedirs(UPLOAD_WAV_DIR, exist_ok=True)
 
@@ -47,11 +39,8 @@ file_list = []
 
 @router.post("/getwav")
 async def upload_audio(audioFile: UploadFile = File(...)) -> JSONResponse:
-    if not audioFile.filename.endswith('.mp3'):
-        raise HTTPException(status_code=400, detail="Invalid file format. Only .mp3 is supported.")
-
     file_name = f"{uuid.uuid4()}.webm"
-    file_path = os.path.join(UPLOAD_MP3_DIR, file_name)
+    file_path = os.path.join(UPLOAD_WEBM_DIR, file_name)
 
     with open(file_path, "wb") as file:
         contents = await audioFile.read()
@@ -59,7 +48,6 @@ async def upload_audio(audioFile: UploadFile = File(...)) -> JSONResponse:
 
     file_size = os.path.getsize(file_path)
     token = str(uuid.uuid4())
-
     file_list.append(file_name)
 
     return JSONResponse(content={
@@ -106,8 +94,8 @@ async def wav_result_complicated():
 @router.get("/result/graph")
 async def wav_result_graph():
     path = "./uploaded_wav_files/"
-    audio_path1 = path + '4f34be34-313c-4100-9890-b35a69e8d275.wav'
-    audio_path2 = path + '7cc4f12f-1906-40d1-8b87-23941e254828.wav'
+    audio_path1 = path + f'{file_list[0][:-5]}.wav'
+    audio_path2 = path + f'{file_list[1][:-5]}.wav'
 
     # 두 음성 파일 로드
     sound1 = parselmouth.Sound(audio_path1)
