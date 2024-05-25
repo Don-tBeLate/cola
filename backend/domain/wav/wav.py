@@ -93,6 +93,7 @@ async def wav_result_complicated():
             index = idxs[i].item()
             prob = probs[i].item() * 100
             label = id2label[index]
+            print(label + ' ' + prob)
 
             for j in prob_list:
                 if j['region'] == label:
