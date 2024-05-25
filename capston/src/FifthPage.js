@@ -23,9 +23,9 @@ function FifthPage() {
       "https://fonts.googleapis.com/css2?family=Poor+Story&display=swap";
     document.head.appendChild(link);
 
-    const fetchData = () => {
+    const fetchData = async () => {
       try {
-        const data = fetch("https://kakacola.com/api/wav/result/complicated").then((res) => res.json());
+        const data = await fetch("https://kakacola.com/api/wav/result/complicated").then((res) => res.json());
         setAllResults(data.result);
       } catch (e) {
         console.log("API 호출 에러", e);
