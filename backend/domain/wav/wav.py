@@ -73,7 +73,7 @@ async def wav_result_complicated():
         name = f"{f[:-5]}.wav"
         path = os.path.join(UPLOAD_WAV_DIR, name)
 
-        sound = AudioSegment.from_file(f"./uploaded_mp3_files/{f}", 'webm')
+        sound = AudioSegment.from_file(f"./uploaded_webm_files/{f}", 'webm')
         sound.export(f"./uploaded_wav_files/{name}", format="wav")
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
