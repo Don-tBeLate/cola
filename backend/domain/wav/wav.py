@@ -72,6 +72,7 @@ async def wav_result_complicated():
     for f in file_list:
         name = f"{f[:-5]}.wav"
         path = os.path.join(UPLOAD_WAV_DIR, name)
+        return {"result": prob_list}
 
         sound = AudioSegment.from_file(f"./uploaded_mp3_files/{f}", 'webm')
         sound.export(f"./uploaded_wav_files/{name}", format="wav")
