@@ -69,10 +69,12 @@ async def upload_audio(audioFile: UploadFile = File(...)) -> JSONResponse:
 
 @router.get("/result/complicated", response_model=Result)
 async def wav_result_complicated():
+    return {"result": prob_list}
+
+    '''
     for f in file_list:
         name = f"{f[:-5]}.wav"
         path = os.path.join(UPLOAD_WAV_DIR, name)
-        return {"result": prob_list}
 
         sound = AudioSegment.from_file(f"./uploaded_mp3_files/{f}", 'webm')
         sound.export(f"./uploaded_wav_files/{name}", format="wav")
@@ -100,7 +102,7 @@ async def wav_result_complicated():
                     j['percentage'] += prob
 
     return {"result": prob_list}
-
+    '''
 
 @router.get("/result/graph")
 async def wav_result_graph():
