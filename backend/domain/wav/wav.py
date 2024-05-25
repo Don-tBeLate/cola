@@ -37,6 +37,16 @@ os.makedirs(UPLOAD_WAV_DIR, exist_ok=True)
 file_list = []
 
 
+@router.options("/getwav")
+async def preflight():
+    response = JSONResponse()
+    response.headers["Access-Control-Allow-Origin"] = "https://cola-mu.vercel.app"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+    return response
+
+
 @router.post("/getwav")
 async def upload_audio(audioFile: UploadFile = File(...)) -> JSONResponse:
     file_name = f"{uuid.uuid4()}.webm"
