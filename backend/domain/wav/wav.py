@@ -71,22 +71,31 @@ async def upload_audio(audioFile: UploadFile = File(...)) -> JSONResponse:
 async def wav_result_complicated():
     for f in file_list:
         name = f"{f[:-5]}.wav"
+        print("1")
         path = os.path.join(UPLOAD_WAV_DIR, name)
+        print("2")
 
         sound = AudioSegment.from_file(f"./uploaded_webm_files/{f}", 'webm')
+        print("3")
         sound.export(f"./uploaded_wav_files/{name}", format="wav")
+        print("4")
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print("5")
         checkpoint = 105
         checkpoint_dir = f"./inference/checkpoint-{checkpoint}"
+        print("6")
         d = checkpoint_dir
 
         model = Wav2Vec2ForSequenceClassification.from_pretrained(d)
+        print("7")
 
         id2label = model.config.id2label
         label2id = model.config.label2id
+        print("8")
 
         model.to(device)
+        print("9")
 
         probs, idxs = inference.predict_top3(f"./uploaded_wav_files/{name}")
         for i in range(3):
@@ -98,6 +107,7 @@ async def wav_result_complicated():
             for j in prob_list:
                 if j['region'] == label:
                     j['percentage'] += prob
+            print("10")
 
     return {"result": prob_list}
 
