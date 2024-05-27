@@ -21,9 +21,9 @@ class Result(BaseModel):
 
 
 prob_list = [
-    {'region': '경기', 'percentage': 0, 'color': '#ff6359'},
-    {'region': '강원', 'percentage': 0, 'color': '#4682b4'},
-    {'region': '전라', 'percentage': 0, 'color': '#3cb371'},
+    {'region': '경기', 'percentage': 50, 'color': '#ff6359'},
+    {'region': '강원', 'percentage': 50, 'color': '#4682b4'},
+    {'region': '전라', 'percentage': 70, 'color': '#3cb371'},
     {'region': '경상', 'percentage': 0, 'color': '#ffd700'},
     {'region': '충청', 'percentage': 0, 'color': '#800080'},
     {'region': '제주', 'percentage': 0, 'color': '#ffa500'}
