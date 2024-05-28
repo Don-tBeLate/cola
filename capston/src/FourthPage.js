@@ -141,7 +141,7 @@ function FourthPage() {
       <div className={`content ${showModal ? 'dim' : ''}`}>
         {showModal && <div className="modal">{recording ? `Recording... ${timer}s` : 'Press record to start'}</div>}
         <h1 className="greeting">{nickname ? `${nickname}님, ` : ''}아래 문장을 녹음해 주세요.</h1>
-        <img src={process.env.PUBLIC_URL + '/profile2.jpg'} alt="profile" className="profile-image2" />
+        <img src={process.env.PUBLIC_URL + '/profile.jpg'} alt="profile" className="profile-images" />
         <div className="buttons">
           <button className="record-btn" onClick={handleRecording} title={recording ? "Stop Recording" : "Start Recording"}>
             {recording ? <FaMicrophone size={30} className="recording" /> : <FaMicrophone size={30} />}
