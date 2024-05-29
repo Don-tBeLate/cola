@@ -120,8 +120,8 @@ async def wav_result_graph():
     audio_path1 = path + f'{af.file_list[0][:-5]}.wav'
     audio_path2 = path + f'{af.file_list[1][:-5]}.wav'
     audio_path3 = path + f'{af.file_list[2][:-5]}.wav'
-    sen1_path = path + '한이는+서강대학교+학생이야_.wav'
-    sen2_path = path + '일요일엔+뭐+타고+오셨어요_.wav'
+    sen1_path = path + '일요일엔+뭐+타고+오셨어요_.wav'
+    sen2_path = path + '한이는+서강대학교+학생이야_.wav'
     sen3_path = path + '오늘+나는+블루베리스무디를+먹었어_.wav'
 
     # 두 음성 파일 로드

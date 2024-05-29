@@ -24,7 +24,7 @@ function FifthPage() {
     const fetchData = async () => {
       try {
         const data = await fetch("https://kakacola.com/api/wav/result/complicated").then((res) => res.json());
-        setAllResults(data.result);
+        setAllResults(data.prob_list); // Ensure this matches the structure of your data
       } catch (e) {
         console.log("API 호출 에러", e);
       }
@@ -38,13 +38,18 @@ function FifthPage() {
   }, []);
 
   useEffect(() => {
-    if (allResults.length === 0) return;
+    if (!Array.isArray(allResults) || allResults.length === 0) return;
+
+    const results = allResults
+      .slice()
+      .sort((a, b) => b.percentage - a.percentage)
+      .slice(0, 3);
 
     const colorizeMap = () => {
       const svgPaths = document.querySelectorAll("svg path");
       svgPaths.forEach((path) => {
         const regionName = path.id;
-         const result = allResults.find((result) => result.region === regionName);
+        const result = results.find((result) => result.region === regionName);
         if (result) {
           path.style.fill = result.color;
         }
@@ -61,11 +66,14 @@ function FifthPage() {
     };
   }, [allResults]);
 
-  const results = allResults
-    .sort((a, b) => b.percentage - a.percentage)
-    .slice(0, 3);
-
   const colorizeGraph = () => {
+    if (!Array.isArray(allResults) || allResults.length === 0) return null;
+
+    const results = allResults
+      .slice()
+      .sort((a, b) => b.percentage - a.percentage)
+      .slice(0, 3);
+
     return results.map((result, index) => (
       <div key={index} className="result">
         <div className="region">{result.region}</div>
