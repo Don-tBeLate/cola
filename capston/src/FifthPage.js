@@ -9,8 +9,6 @@ function FifthPage() {
   const nickname = location.state?.nickname;
   const audioUrls = location.state?.audioUrls || [];
   const [allResults, setAllResults] = useState([]);
-  let myData = null;
-  let tmp = null;
 
   const goToNextAnalysis = () => {
     navigate("/nextAnalysisPage", { state: { nickname, allResults, audioUrls } });
@@ -40,11 +38,13 @@ function FifthPage() {
   }, []);
 
   useEffect(() => {
+    if (allResults.length === 0) return;
+
     const colorizeMap = () => {
       const svgPaths = document.querySelectorAll("svg path");
       svgPaths.forEach((path) => {
         const regionName = path.id;
-        const result = results.find((result) => result.region === regionName);
+         const result = allResults.find((result) => result.region === regionName);
         if (result) {
           path.style.fill = result.color;
         }
@@ -81,7 +81,7 @@ function FifthPage() {
       </div>
     ));
   };
-
+  
   return (
     <div className="FifthPage">
       <header>
