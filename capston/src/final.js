@@ -17,7 +17,7 @@ function FifthPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-}, []);
+  }, []);
 
 
   const goToFirst = () => {

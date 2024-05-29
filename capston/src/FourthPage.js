@@ -32,16 +32,16 @@ function FourthPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-}, []);
+  }, []);
 
 
   const goToFifthPage = () => {
-  setLoading(true);
-  setTimeout(() => {
-    setLoading(false);
-    navigate('/fifthPage', { state: { nickname, audioUrls: [...previousAudioUrls, audioUrl] } });
-  }, 5000);
-};
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigate('/fifthPage', { state: { nickname, audioUrls: [...previousAudioUrls, audioUrl] } });
+    }, 5000);
+  };
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -70,30 +70,30 @@ function FourthPage() {
           const url = URL.createObjectURL(audioBlob);
           setAudioUrl(url);
           setShowModal(false);
-      
+
           const formData = new FormData();
           formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
-      
+
           try {
-              const response = await fetch("https://kakacola.com/api/wav/getwav", {
-                  method: 'POST',
-                  body: formData
-              });
-      
-              if (!response.ok) {
-                  throw new Error('Network response was not ok');
-              }
-      
-              const data = await response.json();
-              setFileSize(data.file_size);
-              setToken(data.token);
-              setFileContentType(data.file_content_type);
-              console.log(data);
-      
+            const response = await fetch("https://kakacola.com/api/wav/getwav", {
+              method: 'POST',
+              body: formData
+            });
+
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            setFileSize(data.file_size);
+            setToken(data.token);
+            setFileContentType(data.file_content_type);
+            console.log(data);
+
           } catch (error) {
-              console.error('파일 업로드 실패:', error);
+            console.error('파일 업로드 실패:', error);
           }
-      };
+        };
 
         mediaRecorderRef.current.start();
         setShowModal(true);
@@ -141,7 +141,7 @@ function FourthPage() {
       <div className={`content ${showModal ? 'dim' : ''}`}>
         {showModal && <div className="modal">{recording ? `Recording... ${timer}s` : 'Press record to start'}</div>}
         <h1 className="greeting">{nickname ? `${nickname}님, ` : ''}아래 문장을 녹음해 주세요.</h1>
-        <img src={process.env.PUBLIC_URL + '/profile.jpg'} alt="profile" className="profile-images" />
+        <img src={process.env.PUBLIC_URL + '/profile2.jpg'} alt="profile" className="profile-image2" />
         <div className="buttons">
           <button className="record-btn" onClick={handleRecording} title={recording ? "Stop Recording" : "Start Recording"}>
             {recording ? <FaMicrophone size={30} className="recording" /> : <FaMicrophone size={30} />}

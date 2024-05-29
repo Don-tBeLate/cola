@@ -47,31 +47,31 @@ function NextPage() {
                     const url = URL.createObjectURL(audioBlob);
                     setAudioUrl(url);
                     setShowModal(false);
-                
+
                     const formData = new FormData();
                     formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
-                
+
                     try {
                         const response = await fetch("https://kakacola.com/api/wav/getwav", {
                             method: 'POST',
                             body: formData
                         });
-                
+
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
                         }
-                
+
                         const data = await response.json();
                         setFileSize(data.file_size);
                         setToken(data.token);
                         setFileContentType(data.file_content_type);
                         console.log(data);
-                
+
                     } catch (error) {
                         console.error('파일 업로드 실패:', error);
                     }
                 };
-                
+
 
                 mediaRecorderRef.current.start();
                 setShowModal(true);

@@ -1,5 +1,5 @@
 .SecondPage {
-  padding:20px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,7 +41,7 @@
   width: 90%;
   padding: 40px;
   border-radius: 20px;
-  background-color:  #faf7f7;
+  background-color: #faf7f7;
   box-sizing: border-box;
   margin: 60px auto 0;
   max-width: 600px;
@@ -64,7 +64,7 @@
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
   margin: 5px;
   width: 70px;
@@ -72,20 +72,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:  #f08080; /* 녹음 버튼 빨간색 */
+  background-color: #f08080;
+  /* 녹음 버튼 빨간색 */
 }
 
 .listen-btn {
-  background-color: #99b5db; /* 듣기 버튼 파란색 */
+  background-color: #99b5db;
+  /* 듣기 버튼 파란색 */
 }
 
-.profile-image, .profile-image2 {
-  width: 180px; /* 이미지의 너비를 150px에서 100px로 조정 */
-  height: 180px; /* 이미지의 높이를 150px에서 100px로 조정 */
-  border-radius: 50%; /* 이미지의 모서리를 둥글게 처리 */
-  margin-bottom: 20px; /* 이미지 아래에 마진 추가 */
-  object-fit: cover; /* 이미지가 비율을 유지하면서 요소의 높이와 너비에 맞춰 조정됨 */
+.profile-image,
+.profile-image2 {
+  width: 180px;
+  /* 이미지의 너비를 150px에서 100px로 조정 */
+  height: 180px;
+  /* 이미지의 높이를 150px에서 100px로 조정 */
+  border-radius: 50%;
+  /* 이미지의 모서리를 둥글게 처리 */
+  margin-bottom: 20px;
+  /* 이미지 아래에 마진 추가 */
+  object-fit: cover;
+  /* 이미지가 비율을 유지하면서 요소의 높이와 너비에 맞춰 조정됨 */
 }
+
 .sentence-box {
   background-color: #f0f0f0;
   padding: 20px;
@@ -160,6 +169,7 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -174,6 +184,7 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

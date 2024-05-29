@@ -10,18 +10,22 @@
 }
 
 .FifthPage {
-  padding:20px;
-	background-color: #ffffff/* Set background to white */
+	padding: 20px;
+	background-color: #ffffff
+		/* Set background to white */
 }
 
 svg {
 	display: block;
-	height: 450px; /* Reduced size proportionally */
+	height: 450px;
+	/* Reduced size proportionally */
 }
 
 svg path {
-	fill: #FFE4E1; /* 기본 색상을 흰색으로 설정 */
-	stroke-width: 2; /* 테두리 두께 설정 */
+	fill: #FFE4E1;
+	/* 기본 색상을 흰색으로 설정 */
+	stroke-width: 2;
+	/* 테두리 두께 설정 */
 }
 
 .results-container {
@@ -90,14 +94,18 @@ svg path {
 }
 
 .social-icon img {
-	width: 60px; /* Adjust the size as needed */
-	height: 60px; /* Adjust the size as needed */
+	width: 60px;
+	/* Adjust the size as needed */
+	height: 60px;
+	/* Adjust the size as needed */
 	margin: 10px;
 	border-radius: 50%;
 	transition: transform 0.3s;
 }
+
 .social-icon img:hover {
-	transform: scale(1.1); /* Optional: Add a hover effect */
+	transform: scale(1.1);
+	/* Optional: Add a hover effect */
 }
 
 .next-btn {

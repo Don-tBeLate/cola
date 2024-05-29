@@ -21,13 +21,13 @@ function ThirdPage() {
   const [token, setToken] = useState(null);
   const [fileContentType, setFileContentType] = useState(null);
 
- useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-}, []); 
+  }, []);
 
   const goToFourthPage = () => {
-  navigate('/FourthPage', { state: { nickname, audioUrls: [...previousAudioUrls, audioUrl] } });
-};
+    navigate('/FourthPage', { state: { nickname, audioUrls: [...previousAudioUrls, audioUrl] } });
+  };
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -56,30 +56,30 @@ function ThirdPage() {
           const url = URL.createObjectURL(audioBlob);
           setAudioUrl(url);
           setShowModal(false);
-      
+
           const formData = new FormData();
           formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
-      
+
           try {
-              const response = await fetch("https://kakacola.com/api/wav/getwav", {
-                  method: 'POST',
-                  body: formData
-              });
-      
-              if (!response.ok) {
-                  throw new Error('Network response was not ok');
-              }
-      
-              const data = await response.json();
-              setFileSize(data.file_size);
-              setToken(data.token);
-              setFileContentType(data.file_content_type);
-              console.log(data);
-      
+            const response = await fetch("https://kakacola.com/api/wav/getwav", {
+              method: 'POST',
+              body: formData
+            });
+
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            setFileSize(data.file_size);
+            setToken(data.token);
+            setFileContentType(data.file_content_type);
+            console.log(data);
+
           } catch (error) {
-              console.error('파일 업로드 실패:', error);
+            console.error('파일 업로드 실패:', error);
           }
-      };
+        };
 
         mediaRecorderRef.current.start();
         setShowModal(true);

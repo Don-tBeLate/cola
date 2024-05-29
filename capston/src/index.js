@@ -20,7 +20,7 @@ ReactDOM.render(
         <Route path="/fifthPage" element={<FifthPage />} />
         <Route path="/nextAnalysisPage" element={<NextAnalysisPage />} />
         <Route path="/final" element={<Final />} />
-        
+
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
