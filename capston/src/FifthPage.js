@@ -24,7 +24,7 @@ function FifthPage() {
     const fetchData = async () => {
       try {
         const data = await fetch("https://kakacola.com/api/wav/result/complicated").then((res) => res.json());
-        setAllResults(data.prob_list); // Ensure this matches the structure of your data
+        setAllResults(data.result); // Ensure this matches the structure of your data
       } catch (e) {
         console.log("API 호출 에러", e);
       }
