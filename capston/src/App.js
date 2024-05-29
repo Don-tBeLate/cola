@@ -25,15 +25,7 @@ function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css2?family=Poor+Story&display=swap';
-    document.head.appendChild(link);
-  }, []);
+}, []);
 
   return (
     <CSSTransition in={inProp} timeout={1000} classNames="slide" unmountOnExit>

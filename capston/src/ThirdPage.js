@@ -126,7 +126,7 @@ function ThirdPage() {
       </div>
       <div className={`content ${showModal ? 'dim' : ''}`}>
         {showModal && <div className="modal">{recording ? `Recording... ${timer}s` : 'Press record to start'}</div>}
-        <h1 className="greeting">{nickname ? `${nickname}님, ` : ''}아래 문장을 녹음해 주세요.</h1>
+        <h1 className="greeting">{nickname ? `${nickname}님, ` : ''}<br/>아래 문장을 녹음해 주세요.</h1>
         <img src={process.env.PUBLIC_URL + '/profile.jpg'} alt="profile" className="profile-image" />
         <div className="buttons">
           <button className="record-btn" onClick={handleRecording} title={recording ? "Stop Recording" : "Start Recording"}>

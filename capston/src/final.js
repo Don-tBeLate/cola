@@ -75,7 +75,7 @@ function FifthPage() {
         <img src={process.env.PUBLIC_URL + '/profile.jpg'} alt="profile" className="profile-image" />
       </header>
       <div>
-        <svg width="400" height="600" viewBox="0 0 524 631">
+        <svg className="svgc" width="400" height="600" viewBox="0 0 524 631">
           <path
             id="경상도"
             name="Busan"

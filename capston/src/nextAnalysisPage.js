@@ -112,10 +112,15 @@ function NextAnalysisPage() {
                                     <Line data={createChartData(allSentences[index * 2], allSentences[index * 2 + 1], sentenceTitles[index])} options={chartOptions} />
                                 </div>
                                 <div className="audio-buttons">
-                                    <button onClick={() => playAudio(audioUrls[index])} className="audio-button-l">
+                                    <button onClick={() => playAudio(`${process.env.PUBLIC_URL}/audio/standard${index + 1}.mp3`)} className="audio-button-l">
                                         <FontAwesomeIcon icon={faPlay} />
                                     </button>
-                                    <span>음성 {index + 1}</span>
+                                    <span>표준음 </span>
+                                    <span className="vs-text">vs</span>
+                                    <button onClick={() => playAudio(audioUrls[index])} className="audio-button-f">
+                                        <FontAwesomeIcon icon={faPlay} />
+                                    </button>
+                                    <span>내 음성</span>
                                 </div>
                             </div>
                         ))}

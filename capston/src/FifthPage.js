@@ -88,7 +88,7 @@ function FifthPage() {
         <h1>
           {nickname}님의
           <br />
-          결과는?
+          사투리 분석 결과는?
         </h1>
         <img
           src={process.env.PUBLIC_URL + "/profile.jpg"}
