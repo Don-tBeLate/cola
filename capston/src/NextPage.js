@@ -133,7 +133,7 @@ function NextPage() {
                 </div>
                 <div className="sentence-box">
                     <p className="sentence-title">SENTENCE 1.</p>
-                    <p className="sentence-content">첫번째 문장입니다.</p>
+                    <p className="sentence-content">한이는 서강대학교 학생이야.</p>
                 </div>
                 <button className="next-btn" onClick={goToThirdPage}>
                     다음 페이지로

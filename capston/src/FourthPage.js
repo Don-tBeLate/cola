@@ -152,7 +152,7 @@ function FourthPage() {
         </div>
         <div className="sentence-box">
           <p className="sentence-title">SENTENCE 3.</p>
-          <p className="sentence-content">세번째 문장입니다.</p>
+          <p className="sentence-content">오늘 나는 블루베리스무디를 먹었어.</p>
         </div>
         <button className="next-btn" onClick={goToFifthPage}>결과 확인하기</button>
       </div>
