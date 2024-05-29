@@ -20,9 +20,9 @@ const chartOptions = {
 };
 
 const sentenceTitles = [
-    "\"코카콜라 맛있다 맛있으면 더먹지\"",
-    "Sentence 2",
-    "Sentence 3"
+    '"일요일엔 뭐 타고 오셨어요?"',
+    '"한이는 서강대학교 학생이야."',
+    '"오늘 나는 블루베리스무디를 먹었어."'
 ];
 
 function NextAnalysisPage() {

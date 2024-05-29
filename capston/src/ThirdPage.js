@@ -138,7 +138,7 @@ function ThirdPage() {
         </div>
         <div className="sentence-box">
           <p className="sentence-title">SENTENCE 2.</p>
-          <p className="sentence-content">일요일엔 뭐 타고 오셨어요?</p>
+          <p className="sentence-content">한이는 서강대학교 학생이야.</p>
         </div>
         <button className="next-btn" onClick={goToFourthPage}>다음 페이지로</button>
       </div>
