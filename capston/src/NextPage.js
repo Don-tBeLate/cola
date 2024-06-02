@@ -53,7 +53,7 @@ function NextPage() {
                     formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
 
                     try {
-                        const response = await fetch("http://127.0.0.1:8000/api/wav/getwav/" + index, {
+                        const response = await fetch("https://kakacola.com/api/wav/getwav/" + index, {
                             method: 'POST',
                             body: formData
                         });
@@ -111,7 +111,7 @@ function NextPage() {
     const goToThirdPage = () => {
         const id = "1";
         try {
-            const data = fetch("http://127.0.0.1:8000/api/wav/result/" + id).then((res) => res.json());
+            const data = fetch("https://kakacola.com/api/wav/result/" + id).then((res) => res.json());
             setAllResults(data.result); // Ensure this matches the structure of your data
         } catch (e) {
             console.log("API 호출 에러", e);

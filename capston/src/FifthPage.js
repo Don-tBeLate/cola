@@ -33,7 +33,7 @@ function FifthPage() {
     const fetchData = async () => {
       const id = "3";
       try {
-        const data = await fetch("http://127.0.0.1:8000/api/wav/result/complicated/" + id).then((res) => res.json());
+        const data = await fetch("https://kakacola.com/api/wav/result/complicated/" + id).then((res) => res.json());
         setAllResults(data.result); // Ensure this matches the structure of your data
         console.log(data)
         console.log(allResults)

@@ -65,7 +65,7 @@ function FourthPage() {
           formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
 
           try {
-            const response = await fetch("http://127.0.0.1:8000/api/wav/getwav/" + index, {
+            const response = await fetch("https://kakacola.com/api/wav/getwav/" + index, {
               method: 'POST',
               body: formData
             });
