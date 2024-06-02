@@ -43,7 +43,7 @@ function NextPage() {
                 };
 
                 mediaRecorderRef.current.onstop = async () => {
-                    const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/mp3' });
+                    const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
                     const url = URL.createObjectURL(audioBlob);
                     setAudioUrl(url);
                     setShowModal(false);
