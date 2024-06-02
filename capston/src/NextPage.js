@@ -43,14 +43,14 @@ function NextPage() {
                 };
 
                 mediaRecorderRef.current.onstop = async () => {
-                    const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+                    const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/mp4' });
                     const url = URL.createObjectURL(audioBlob);
                     setAudioUrl(url);
                     setShowModal(false);
 
                     const index = "1";
                     const formData = new FormData();
-                    formData.append('audioFile', audioBlob, 'recording.wav'); // Specify the filename to ensure correct handling
+                    formData.append('audioFile', audioBlob, 'recording.mp4'); // Specify the filename to ensure correct handling
 
                     try {
                         const response = await fetch("https://kakacola.com/api/wav/getwav/" + index, {
