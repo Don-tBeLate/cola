@@ -1,12 +1,48 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import html2canvas from "html2canvas";
+import { getStorage, ref, uploadString } from "firebase/storage";
+import { initializeApp } from "firebase/app";
 import './FifthPage.css';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDcVUzucdPsEmZ-fBUb5aDPP6Y-1yI-AkQ",
+  authDomain: "cocacola-9fd23.firebaseapp.com",
+  projectId: "cocacola-9fd23",
+  storageBucket: "cocacola-9fd23.appspot.com",
+  messagingSenderId: "419651002954",
+  appId: "1:419651002954:web:c190b6ce6ef6799a9f3cb3",
+  measurementId: "G-R7KLKRWW4K"
+};
+
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 
 function FifthPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { nickname, allResults } = location.state || { nickname: '', allResults: [] };
+
+  const captureAndShare = async () => {
+    try {
+      const element = document.querySelector('.fifth-page-content');
+      if (!element) {
+        throw new Error('Element not found');
+      }
+
+      const canvas = await html2canvas(element);
+      const imgData = canvas.toDataURL("image/png");
+
+      const storageRef = ref(storage, `screenshots/screenshot_${Date.now()}.png`);
+      await uploadString(storageRef, imgData, "data_url");
+
+      alert("Screenshot uploaded successfully!");
+    } catch (error) {
+      console.error("Error uploading screenshot: ", error.message);
+      alert("Failed to upload screenshot.");
+    }
+  };
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -25,13 +61,21 @@ function FifthPage() {
   };
 
   useEffect(() => {
+
+    const results = allResults
+      .slice()
+      .sort((a, b) => b.percentage - a.percentage)
+      .slice(0, 3);
+
+    const colorMap = ["#a52a2a", "#cd5c5c", "#f0908e"];
+
     const colorizeMap = () => {
       const svgPaths = document.querySelectorAll("svg path");
       svgPaths.forEach((path) => {
         const regionName = path.id;
-        const result = results.find((result) => result.region === regionName);
-        if (result) {
-          path.style.fill = result.color;
+        const resultIndex = results.findIndex((result) => result.region === regionName);
+        if (resultIndex !== -1) {
+          path.style.fill = colorMap[resultIndex];
         }
       });
     };
@@ -173,7 +217,7 @@ function FifthPage() {
       <div className='btnfinal'>
         <p>친구에게 공유하기</p>
         <div className="social-icons">
-          <a href="#" className="social-icon">
+          <a href="#" className="social-icon" onClick={captureAndShare}>
             <img src={`${process.env.PUBLIC_URL}/kakaotalk.png`} alt="Kakaotalk" />
           </a>
           <a href="#" className="social-icon">

@@ -16,16 +16,23 @@ function ThirdPage() {
   const [intervalId, setIntervalId] = useState(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
-
   const [fileSize, setFileSize] = useState(null);
   const [token, setToken] = useState(null);
   const [fileContentType, setFileContentType] = useState(null);
+  const [allResults, setAllResults] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const goToFourthPage = () => {
+    const id = "2";
+    try {
+      const data = fetch("http://127.0.0.1:8000/api/wav/result/" + id).then((res) => res.json());
+      setAllResults(data.result); // Ensure this matches the structure of your data
+    } catch (e) {
+      console.log("API 호출 에러", e);
+    }
     navigate('/FourthPage', { state: { nickname, audioUrls: [...previousAudioUrls, audioUrl] } });
   };
 
@@ -57,11 +64,12 @@ function ThirdPage() {
           setAudioUrl(url);
           setShowModal(false);
 
+          const index = "2";
           const formData = new FormData();
           formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
 
           try {
-            const response = await fetch("https://kakacola.com/api/wav/getwav", {
+            const response = await fetch("http://127.0.0.1:8000/api/wav/getwav/" + index, {
               method: 'POST',
               body: formData
             });
@@ -126,7 +134,7 @@ function ThirdPage() {
       </div>
       <div className={`content ${showModal ? 'dim' : ''}`}>
         {showModal && <div className="modal">{recording ? `Recording... ${timer}s` : 'Press record to start'}</div>}
-        <h1 className="greeting">{nickname ? `${nickname}님, ` : ''}<br/>아래 문장을 녹음해 주세요.</h1>
+        <h1 className="greeting">{nickname ? `${nickname}님, ` : ''}<br />아래 문장을 녹음해 주세요.</h1>
         <img src={process.env.PUBLIC_URL + '/profile.jpg'} alt="profile" className="profile-image" />
         <div className="buttons">
           <button className="record-btn" onClick={handleRecording} title={recording ? "Stop Recording" : "Start Recording"}>

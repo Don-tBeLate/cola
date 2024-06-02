@@ -4,13 +4,6 @@ import './NextPage.css';
 import { FaMicrophone } from "react-icons/fa6";
 import { FaHeadphones } from "react-icons/fa6";
 
-function LoadingScreen() {
-  return (
-    <div className="loading-screen">
-      <div className="loading-circle"></div>
-    </div>
-  );
-}
 
 function FourthPage() {
   const navigate = useNavigate();
@@ -25,10 +18,10 @@ function FourthPage() {
   const [intervalId, setIntervalId] = useState(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
-
   const [fileSize, setFileSize] = useState(null);
   const [token, setToken] = useState(null);
   const [fileContentType, setFileContentType] = useState(null);
+  const [allResults, setAllResults] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,11 +29,7 @@ function FourthPage() {
 
 
   const goToFifthPage = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
       navigate('/fifthPage', { state: { nickname, audioUrls: [...previousAudioUrls, audioUrl] } });
-    }, 5000);
   };
 
   useEffect(() => {
@@ -71,11 +60,12 @@ function FourthPage() {
           setAudioUrl(url);
           setShowModal(false);
 
+          const index = "3";
           const formData = new FormData();
           formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
 
           try {
-            const response = await fetch("https://kakacola.com/api/wav/getwav", {
+            const response = await fetch("http://127.0.0.1:8000/api/wav/getwav/" + index, {
               method: 'POST',
               body: formData
             });
@@ -132,7 +122,6 @@ function FourthPage() {
 
   return (
     <div className="SecondPage">
-      {isLoading && <LoadingScreen />}
       <div className="header">
         <div className="progress-container">
           <div className="progress-bar" style={{ width: '75%' }}></div>
@@ -140,7 +129,7 @@ function FourthPage() {
       </div>
       <div className={`content ${showModal ? 'dim' : ''}`}>
         {showModal && <div className="modal">{recording ? `Recording... ${timer}s` : 'Press record to start'}</div>}
-        <h1 className="greeting">{nickname ? `${nickname}님, ` : ''}<br />아래 문장을 녹음해 주세요.</h1>
+        <h1 className="greeting">{nickname ? `${nickname}님, ` : ''}<br/>아래 문장을 녹음해 주세요.</h1>
         <img src={process.env.PUBLIC_URL + '/profile2.jpg'} alt="profile" className="profile-image2" />
         <div className="buttons">
           <button className="record-btn" onClick={handleRecording} title={recording ? "Stop Recording" : "Start Recording"}>

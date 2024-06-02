@@ -15,10 +15,10 @@ function NextPage() {
     const [intervalId, setIntervalId] = useState(null);
     const mediaRecorderRef = useRef(null);
     const audioChunksRef = useRef([]);
-
     const [fileSize, setFileSize] = useState(null);
     const [token, setToken] = useState(null);
     const [fileContentType, setFileContentType] = useState(null);
+    const [allResults, setAllResults] = useState([]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -48,11 +48,12 @@ function NextPage() {
                     setAudioUrl(url);
                     setShowModal(false);
 
+                    const index = "1";
                     const formData = new FormData();
                     formData.append('audioFile', audioBlob, 'recording.mp3'); // Specify the filename to ensure correct handling
 
                     try {
-                        const response = await fetch("https://kakacola.com/api/wav/getwav", {
+                        const response = await fetch("http://127.0.0.1:8000/api/wav/getwav/" + index, {
                             method: 'POST',
                             body: formData
                         });
@@ -71,7 +72,6 @@ function NextPage() {
                         console.error('파일 업로드 실패:', error);
                     }
                 };
-
 
                 mediaRecorderRef.current.start();
                 setShowModal(true);
@@ -109,6 +109,13 @@ function NextPage() {
     };
 
     const goToThirdPage = () => {
+        const id = "1";
+        try {
+            const data = fetch("http://127.0.0.1:8000/api/wav/result/" + id).then((res) => res.json());
+            setAllResults(data.result); // Ensure this matches the structure of your data
+        } catch (e) {
+            console.log("API 호출 에러", e);
+        }
         navigate('/ThirdPage', { state: { nickname, audioUrls: [audioUrl] } });
     };
 
