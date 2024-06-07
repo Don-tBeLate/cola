@@ -107,7 +107,6 @@ function FifthPage() {
   return (
     <div className="FifthPage">
       {isLoading && <LoadingScreen />}
-      //추가
       {!isLoading && (
         <>
           <header>
