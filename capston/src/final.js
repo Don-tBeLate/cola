@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import html2canvas from "html2canvas";
-import { getStorage, ref, uploadString } from "firebase/storage";
+import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
 import { initializeApp } from "firebase/app";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
 import './FifthPage.css';
 
 const firebaseConfig = {
@@ -18,29 +18,90 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
+const auth = getAuth(app);
 
 function FifthPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { nickname, allResults } = location.state || { nickname: '', allResults: [] };
 
-  const captureAndShare = async () => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+        console.log('User is authenticated:', user);
+      } else {
+        setIsAuthenticated(false);
+        console.log('User is not authenticated');
+      }
+    });
+
+    if (!auth.currentUser) {
+      signInAnonymously(auth)
+        .then(() => {
+          console.log('Signed in anonymously');
+        })
+        .catch((error) => {
+          console.error('Error signing in anonymously:', error);
+        });
+    }
+
+    return () => unsubscribe();
+  }, []);
+
+  const takeScreenshotAndUpload = async () => {
     try {
+      console.log("Starting capture process...");
+
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
       const element = document.querySelector('.fifth-page-content');
       if (!element) {
         throw new Error('Element not found');
       }
 
-      const canvas = await html2canvas(element);
+      console.log("Element found, starting capture...");
+      const canvas = await html2canvas(element, { scale: 2 });
+      console.log("Canvas created, converting to data URL...");
       const imgData = canvas.toDataURL("image/png");
+
+      console.log("Data URL created, starting upload...");
 
       const storageRef = ref(storage, `screenshots/screenshot_${Date.now()}.png`);
       await uploadString(storageRef, imgData, "data_url");
+      console.log("Upload complete");
+
+      const downloadURL = await getDownloadURL(storageRef);
+      console.log("Screenshot URL:", downloadURL);
+
+      // 백엔드에 이미지 URL 전달
+      await sendImageToBackend(downloadURL);
 
       alert("Screenshot uploaded successfully!");
     } catch (error) {
-      console.error("Error uploading screenshot: ", error.message);
-      alert("Failed to upload screenshot.");
+      console.error("Error during capture and upload process:", error);
+      alert("Failed to upload screenshot. " + error.message);
+    }
+  };
+
+  const sendImageToBackend = async (imageURL) => {
+    try {
+      const response = await fetch('', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageURL }),
+      });
+
+      if (response.ok) {
+        console.log('Image uploaded to backend successfully');
+      } else {
+        console.error('Error uploading image to backend:', response.status);
+      }
+    } catch (error) {
+      console.error('Error sending image to backend:', error);
     }
   };
 
@@ -55,13 +116,11 @@ function FifthPage() {
     window.scrollTo(0, 0);
   }, []);
 
-
   const goToFirst = () => {
     navigate('/');
   };
 
   useEffect(() => {
-
     const results = allResults
       .slice()
       .sort((a, b) => b.percentage - a.percentage)
@@ -113,6 +172,7 @@ function FifthPage() {
 
   return (
     <div className="FifthPage">
+      <div className="fifth-page-content">
       <header>
         <h2>친구에게 공유해요!</h2>
         <h1>{nickname}님의<br />결과는?</h1>
@@ -217,7 +277,7 @@ function FifthPage() {
       <div className='btnfinal'>
         <p>친구에게 공유하기</p>
         <div className="social-icons">
-          <a href="#" className="social-icon" onClick={captureAndShare}>
+          <a href="#" className="social-icon" onClick={takeScreenshotAndUpload}>
             <img src={`${process.env.PUBLIC_URL}/kakaotalk.png`} alt="Kakaotalk" />
           </a>
           <a href="#" className="social-icon">
@@ -228,6 +288,7 @@ function FifthPage() {
           처음으로 돌아가기
         </button>
       </div>
+    </div>
     </div>
   );
 }

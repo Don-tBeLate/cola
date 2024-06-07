@@ -35,8 +35,6 @@ function FifthPage() {
       try {
         const data = await fetch("https://kakacola.com/api/wav/result/complicated/" + id).then((res) => res.json());
         setAllResults(data.result); // Ensure this matches the structure of your data
-        console.log(data)
-        console.log(allResults)
       } catch (e) {
         console.log("API 호출 에러", e);
       } finally {
@@ -109,6 +107,8 @@ function FifthPage() {
   return (
     <div className="FifthPage">
       {isLoading && <LoadingScreen />}
+      //추가
+      {!isLoading && (
         <>
           <header>
             <h1>
@@ -216,6 +216,7 @@ function FifthPage() {
             다음 분석 페이지로
           </button>
         </>
+      )}
     </div>
   );
 }
