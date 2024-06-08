@@ -107,7 +107,6 @@ function FifthPage() {
   return (
     <div className="FifthPage">
       {isLoading && <LoadingScreen />}
-      {!isLoading && (
         <>
           <header>
             <h1>
@@ -215,7 +214,6 @@ function FifthPage() {
             다음 분석 페이지로
           </button>
         </>
-      )}
     </div>
   );
 }
