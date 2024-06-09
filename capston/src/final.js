@@ -5,6 +5,7 @@ import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage"
 import { initializeApp } from "firebase/app";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
 import './FifthPage.css';
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 const firebaseConfig = {
   apiKey: "AIzaSyDcVUzucdPsEmZ-fBUb5aDPP6Y-1yI-AkQ",
@@ -19,12 +20,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 const auth = getAuth(app);
+const { Kakao } = window;
 
 function FifthPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { nickname, allResults } = location.state || { nickname: '', allResults: [] };
+  const [downloadURL, setDownloadURL] = useState(null);
+  // 배포주소
+  const realUrl = "http://localhost:3000/";
+  // local 주소
+  const resultlUrl = "window.location.href";
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -46,15 +53,26 @@ function FifthPage() {
           console.error('Error signing in anonymously:', error);
         });
     }
+    initializeKakaoSDK();
+
+    // 화면이 렌더링될 때 이미지 업로드 및 URL 가져오기
+    takeScreenshotAndUpload();
 
     return () => unsubscribe();
   }, []);
 
+  const initializeKakaoSDK = () => {
+    // init 해주기 전에 clean up 을 해준다.
+    Kakao.cleanup();
+    // 자신의 js 키를 넣어준다.
+    Kakao.init('de612068d72f9f8be3e5a32881a11d41');
+    // 잘 적용되면 true 를 뱉는다.
+    console.log(Kakao.isInitialized());
+  };
+
   const takeScreenshotAndUpload = async () => {
     try {
       console.log("Starting capture process...");
-
-      await new Promise(resolve => setTimeout(resolve, 1000));
 
       const element = document.querySelector('.fifth-page-content');
       if (!element) {
@@ -72,17 +90,26 @@ function FifthPage() {
       await uploadString(storageRef, imgData, "data_url");
       console.log("Upload complete");
 
-      const downloadURL = await getDownloadURL(storageRef);
-      console.log("Screenshot URL:", downloadURL);
+      const downloadURLFromFirebase = await getDownloadURL(storageRef);
+      console.log("Screenshot URL:", downloadURLFromFirebase);
+      setDownloadURL(downloadURLFromFirebase);
 
       // 백엔드에 이미지 URL 전달
-      await sendImageToBackend(downloadURL);
-
-      alert("Screenshot uploaded successfully!");
+      await sendImageToBackend(downloadURLFromFirebase);
     } catch (error) {
       console.error("Error during capture and upload process:", error);
       alert("Failed to upload screenshot. " + error.message);
     }
+  };
+
+  const shareKakao = () => {
+    Kakao.Share.sendCustom({
+      templateId: 108810,
+      templateArgs: {
+        title: '라이언이 즐겨먹던 바로 그 틴케이스 치즈볼',
+        description: '바라만 봐도 즐거워지는 힐링 패키지에는 시크릿 스토리가 숨어있어요.',
+      },
+    });
   };
 
   const sendImageToBackend = async (imageURL) => {
@@ -102,6 +129,29 @@ function FifthPage() {
       }
     } catch (error) {
       console.error('Error sending image to backend:', error);
+    }
+  };
+
+  const saveImageToMobile = async () => {
+    try {
+      const element = document.querySelector('.fifth-page-content');
+      if (!element) {
+        throw new Error('Element not found');
+      }
+
+      console.log("Element found, starting capture...");
+      const canvas = await html2canvas(element, { scale: 2 });
+      console.log("Canvas created, converting to data URL...");
+      const imgData = canvas.toDataURL("image/png");
+
+        const link = document.createElement('a');
+        link.download = `${nickname}_result.png`;
+        link.href = imgData;
+        link.click();
+        alert("이미지가 저장되었습니다");
+    } catch (error) {
+      console.error('Error saving image to mobile device:', error);
+      alert("Failed to save image. " + error.message);
     }
   };
 
@@ -275,18 +325,18 @@ function FifthPage() {
         {colorizeGraph()}
       </div>
       <div className='btnfinal'>
-        <p>친구에게 공유하기</p>
+        <p>친구에게 공유해보자!</p>
         <div className="social-icons">
-          <a href="#" className="social-icon" onClick={takeScreenshotAndUpload}>
-            <img src={`${process.env.PUBLIC_URL}/kakaotalk.png`} alt="Kakaotalk" />
-          </a>
-          <a href="#" className="social-icon">
-            <img src={`${process.env.PUBLIC_URL}/instagram.png`} alt="Instagram" />
-          </a>
+        <a href="#" className="social-icon" onClick={ shareKakao}>
+        <img src={`${process.env.PUBLIC_URL}/kakaotalk.png`} alt="Kakaotalk" />
+      </a>
         </div>
-        <button className="next-btn" onClick={goToFirst}>
-          처음으로 돌아가기
-        </button>
+        <button className="next-btn-image" onClick={saveImageToMobile}>
+            이미지 저장하기
+          </button>
+          <button className="next-btn" onClick={goToFirst}>
+            처음으로 돌아가기
+          </button>
       </div>
     </div>
     </div>

@@ -112,7 +112,7 @@ function NextAnalysisPage() {
                                     <Line data={createChartData(allSentences[index * 2], allSentences[index * 2 + 1], sentenceTitles[index])} options={chartOptions} />
                                 </div>
                                 <div className="audio-buttons">
-                                    <button onClick={() => playAudio(`public/${index + 1}.wav`)} className="audio-button-l">
+                                    <button onClick={() => playAudio(`${index + 1}.wav`)} className="audio-button-l">
                                         <FontAwesomeIcon icon={faPlay} />
                                     </button>
                                     <span>표준음 </span>
